@@ -24,6 +24,7 @@ import org.sen.senWorlds.world.WorldData;
 import org.sen.senWorlds.world.WorldManager;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -86,6 +87,7 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
 
 
         if (args.length == 0) {
+
 
             Player p = (Player) sender;
             p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_CHIME, 1f, 1f);
@@ -157,7 +159,9 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
                 }
 
                 if (!(sender instanceof Player player)) {
-                    sender.sendMessage("§cOnly players can use this command!");
+                    String onlyplayer = plugin.getConfig().getString("errory.onlyplayer", "{prefix} §cLen hraci mozu pouzit tento prikaz!")
+                                    .replace("{prefix}", SenWorlds.PREFIX);
+                    sender.sendMessage(SenWorlds.c(onlyplayer));
                     return true;
                 }
 
@@ -167,52 +171,74 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
                 World targetWorld = Bukkit.getWorld(worldName);
 
                 if (targetWorld == null) {
-                    sender.sendMessage("§cWorld not found or not loaded!");
+                    String notfound = plugin.getConfig().getString("errory.notfound", "{prefix} &eSvet nebol najdeny, alebo nacitany")
+                                    .replace("{prefix}", SenWorlds.PREFIX);
+                    sender.sendMessage(SenWorlds.c(notfound));
                     return true;
                 }
 
                 WorldData data = worldManager.getWorldData(worldName);
                 if (data != null) {
-                    sender.sendMessage("§aTeleporting to custom world: " + worldName);
-                } else {
-                    sender.sendMessage("§aTeleporting to world: " + worldName);
+                    String teleportingcustom = plugin.getConfig().getString("spravy.teleportingcustom", "{prefix} &eTeleportujem do sveta {menosveta}")
+                                    .replace("{prefix}", SenWorlds.PREFIX)
+                                            .replace("{menosveta}", worldName);
+
+                    sender.sendMessage(SenWorlds.c(teleportingcustom));
                 }
 
                 player.teleport(targetWorld.getSpawnLocation());
 
-                sender.sendMessage("§aTeleported to world: " + targetWorld.getName());
+                String targetworldgetname = targetWorld.getName();
+
+                String teleportnuty = plugin.getConfig().getString("spravy.teleported", "{prefix} &aTeleportnuty do sveta: {menosveta}")
+                                .replace("{prefix}", SenWorlds.PREFIX)
+                                        .replace("{menosveta}", targetworldgetname);
+
+
+                sender.sendMessage(SenWorlds.c(teleportnuty));
             }
 
             case "delete" -> {
 
                 if (args.length < 2) {
-                    sender.sendMessage("§cUsage: /sw delete <name>");
+
+                    String deleteusage = plugin.getConfig().getString("usage.deleteusage", "{prefix} &cPouzitie: /sw delete <meno>")
+                                    .replace("{prefix}", SenWorlds.PREFIX);
+
+                    sender.sendMessage(SenWorlds.c(deleteusage));
                     return true;
                 }
 
                 String name = args[1];
 
                 if (!worldManager.worldExists(name)) {
-                    sender.sendMessage("§cWorld does not exist.");
+                    String worldnotexist = plugin.getConfig().getString("errory.worldnotexist", "&cSvet neexistuje!")
+                                    .replace("{prefix}", SenWorlds.PREFIX);
+                    sender.sendMessage(SenWorlds.c(worldnotexist));
                     return true;
                 }
 
                 Bukkit.unloadWorld(name, false);
                 worldManager.deleteWorld(name);
 
-                sender.sendMessage("§aWorld deleted successfully!");
+                String worlddeleted = plugin.getConfig().getString("spravy.worlddeleted", "{prefix} &aSvet zmazany!")
+                                .replace("{prefix}", SenWorlds.PREFIX);
+                sender.sendMessage(SenWorlds.c(worlddeleted));
 
             }
 
             case "reload" -> {
                 if (args.length < 2){
                     plugin.reloadConfig();
-                    SenWorlds.PREFIX = plugin.getConfig().getString("spravy.prefix", "#00C7EESenWorlds &8▸ ");
-                    sender.sendMessage("Plugin reloadnuty");
+                    String reloadmsg = plugin.getConfig().getString("spravy.reloadmsg", "{prefix} &aKonfiguracia uspesne obnovena")
+                                    .replace("{prefix}", SenWorlds.PREFIX);
+                    sender.sendMessage(SenWorlds.c(reloadmsg));
                 }
             }
 
             case "list" -> {
+
+
                 sender.sendMessage(" ");
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&eLoadnute svety"));
 
@@ -221,10 +247,13 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
                 }
 
                 sender.sendMessage(" ");
+
+
             }
 
 
-            default -> sender.sendMessage("§cUnknown subcommand.");
+
+            default -> sender.sendMessage(SenWorlds.c(("&cNeznamy priakz!")));
         }
 
         return true;

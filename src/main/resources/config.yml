@@ -2,9 +2,14 @@ spravy:
   prefix: "#00C7EESenWorldss &8▸ "
   creatingworld: "{prefix} §7Vytvara sa svet: {name} ..."
   worldcreated: "{prefix} &eSvet {name} bol vytvoreny"
+  teleportingcustom: "&eTeleportujem do sveta {menosveta}"
+  teleported: "{prefix} &aTeleportnuty do sveta: {menosveta}"
+  worlddeleted: "{prefix} &aSvet zmazany!"
+  reloadmsg: "{prefix} &aKonfiguracia uspesne obnovena"
 
 usage:
   noargscreate: "{prefix} &cPouzitie: /sw create <meno> <normal/nether/end/flat/void>"
+  deleteusage: "{prefix} &cPouzitie: /sw delete <meno>"
   helpmessage:
     - " "
     - "&r &r #00C7EE&lSenWorlds &7- #00C7EE&lCommandy:"
@@ -21,3 +26,6 @@ errory:
   zmazanysvettp: "{prefix} &7Svet bol zmazaný. Bol si teleportovaný."
   invalidenv: "{prefix} &7Neplatný Enviroment. Použi: Normal, End, Nether, Flat, Void"
   worldexists: "&7Svet už existuje!"
+  onlyplayer: "{prefix} §cLen hraci mozu pouzit tento prikaz!"
+  notfound: "{prefix} &eSvet nebol najdeny, alebo nacitany"
+  worldnotexist: "&cSvet neexistuje!"
