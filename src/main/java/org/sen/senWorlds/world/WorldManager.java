@@ -52,9 +52,7 @@ public class WorldManager {
         plugin.getLogger().info("Loaded " + worlds.size() + " worlds.");
     }
 
-    // =========================
-    // ASYNC WORLD CREATION
-    // =========================
+// Skusanie Async World Generacie
     public void createWorldAsync(String name, String envType, Runnable callback) {
 
         if (worlds.containsKey(name.toLowerCase())) return;
@@ -63,13 +61,14 @@ public class WorldManager {
 
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             try {
-                // Template folder copy (optional)
+
+                // Template folder copy (Volitelne) TO DO!
                 File templateFolder = new File(plugin.getDataFolder(), "templates/" + envType.toLowerCase());
                 File targetFolder = new File(Bukkit.getWorldContainer(), name);
 
                 if (templateFolder.exists()) copyFolder(templateFolder, targetFolder);
 
-                // Back to main thread for safe world creation
+                // Main Thread
                 Bukkit.getScheduler().runTask(plugin, () -> {
                     WorldCreator creator = new WorldCreator(name);
 
@@ -90,7 +89,7 @@ public class WorldManager {
 
                     World world = Bukkit.createWorld(creator);
 
-                    // Save to manager
+                    // Main thread - Ulozenie
                     worlds.put(name.toLowerCase(), new WorldData(name, envType));
                     saveWorld(name, envType);
 
@@ -115,7 +114,7 @@ public class WorldManager {
         World safeWorld = Bukkit.getWorlds().get(0);
         Location safeLocation = safeWorld.getSpawnLocation();
 
-        // Teleport players out
+        // Teleportne hracov prec pri zmazani worldu
         for (Player player : world.getPlayers()) {
             player.teleport(safeLocation);
 
@@ -125,10 +124,10 @@ public class WorldManager {
             player.sendMessage((SenWorlds.c(zmazanysvet)));
         }
 
-        // Unload world
+        // Unloadnut svet
         Bukkit.unloadWorld(world, false);
 
-        // Delete folder
+        // Zmazat world folder
         File worldFolder = world.getWorldFolder();
         deleteFolder(worldFolder);
 

@@ -1,7 +1,8 @@
 spravy:
-  prefix: "#00C7EESenWorlds &8▸ "
+  prefix: "#00C7EESenWorldss &8▸ "
+  creatingworld: "{prefix} §7Vytvara sa svet: {name} ..."
 
 errory:
   zmazanysvettp: "{prefix} &7Svet bol zmazaný. Bol si teleportovaný."
-  invalidenv: "&7Neplatný Enviroment. Použi: Normal, End, Nether, Flat, Void"
+  invalidenv: "{prefix} &7Neplatný Enviroment. Použi: Normal, End, Nether, Flat, Void"
   worldexists: "&7Svet už existuje!"

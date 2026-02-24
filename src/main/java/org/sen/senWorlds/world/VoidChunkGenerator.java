@@ -16,7 +16,7 @@ public class VoidChunkGenerator extends ChunkGenerator {
     public ChunkData generateChunkData(World world, Random random, int chunkX, int chunkZ, BiomeGrid biome) {
         ChunkData chunk = createChunkData(world);
 
-        // Only place bedrock in chunk (0,0)
+        // Da na suradnice 0, 0, 0 (LIGHT_BLUE_GLAZED_TERRACOTTA)
         if (!bedrockPlaced && chunkX == 0 && chunkZ == 0) {
             chunk.setBlock(0, 0, 0, Material.LIGHT_BLUE_GLAZED_TERRACOTTA);
             bedrockPlaced = true;

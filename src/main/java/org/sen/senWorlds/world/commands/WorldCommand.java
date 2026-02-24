@@ -99,18 +99,24 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
 
                 if (!List.of("normal","nether","end","flat","void").contains(envType)) {
 
-                    String invalidenv = invalidenvconf.getString("invalidenv", SenWorlds.c("&7Neplatný Enviroment. Použi: Normal, End, Nether, Flat, Void"));
-                    sender.sendMessage(SenWorlds.c(SenWorlds.PREFIX + invalidenv));
+                    String invalidenv = invalidenvconf.getString("invalidenv", SenWorlds.c("{prefix} &7Neplatný Enviroment. Použi: Normal, End, Nether, Flat, Void"))
+                                    .replace("{prefix}", SenWorlds.PREFIX);
+                    sender.sendMessage(SenWorlds.c(invalidenv));
                     return true;
                 }
 
                 if (worldManager.worldExists(name)) {
-                    String worldexists = invalidenvconf.getString("worldexists", "&7Svet už existuje!");
-                    sender.sendMessage((SenWorlds.c(SenWorlds.PREFIX + worldexists)));
+                    String worldexists = invalidenvconf.getString("worldexists", "{prefix} &7Svet už existuje!")
+                                    .replace("{prefix}", SenWorlds.PREFIX);
+                    sender.sendMessage((SenWorlds.c(worldexists)));
                     return true;
                 }
 
-                sender.sendMessage("§eCreating world " + name + "...");
+                String creatingworld = plugin.getConfig().getString("spravy.creatingworld", "{prefix} §eVytvara sa svet {name} ...")
+                                .replace("{prefix}", SenWorlds.PREFIX)
+                                        .replace("{name}", name);
+
+                sender.sendMessage(SenWorlds.c(creatingworld));
 
                 worldManager.createWorldAsync(name, envType, () -> {
                     sender.sendMessage("§aWorld " + name + " has been created!");
@@ -178,6 +184,7 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
             case "reload" -> {
                 if (args.length < 2){
                     plugin.reloadConfig();
+                    SenWorlds.PREFIX = plugin.getConfig().getString("spravy.prefix", "#00C7EESenWorlds &8▸ ");
                     sender.sendMessage("Plugin reloadnuty");
                 }
             }

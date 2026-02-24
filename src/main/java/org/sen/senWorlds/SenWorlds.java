@@ -1,6 +1,5 @@
 package org.sen.senWorlds;
 
-import org.bukkit.Color;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.sen.senWorlds.util.ColorUtil;
 import org.sen.senWorlds.world.WorldManager;
@@ -17,10 +16,13 @@ public final class SenWorlds extends JavaPlugin {
     // Na prefix aby som mohol vsade pouzivat
     public static String PREFIX;
 
+
     @Override
     public void onEnable() {
         saveDefaultConfig();
         saveResource("world.yml", false);
+
+        reloadConfig();
         PREFIX = getConfig().getString("spravy.prefix", "#00C7EESenWorlds &8▸ ");
 
         getLogger().info("SenWorlds sa nacital");
