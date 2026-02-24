@@ -1,6 +1,10 @@
 spravy:
   prefix: "#00C7EESenWorldss &8▸ "
   creatingworld: "{prefix} §7Vytvara sa svet: {name} ..."
+  worldcreated: "{prefix} &eSvet {name} bol vytvoreny"
+
+usage:
+  noargscreate: "{prefix} &cPouzitie: /sw create <meno> <normal/nether/end/flat/void>"
 
 errory:
   zmazanysvettp: "{prefix} &7Svet bol zmazaný. Bol si teleportovaný."

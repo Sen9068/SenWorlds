@@ -75,13 +75,23 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         ConfigurationSection invalidenvconf = plugin.getConfig().getConfigurationSection("errory");
+        ConfigurationSection usage = plugin.getConfig().getConfigurationSection("usage");
 
 
 
 
         if (args.length == 0) {
-            sender.sendMessage("§e/sw create <name> <normal|nether|end>");
-            sender.sendMessage("§e/sw delete <name>");
+
+            sender.sendMessage(" ");
+            sender.sendMessage(SenWorlds.c("&r &r #00C7EE&lSenWorlds &7- #00C7EE&lCommandy:"));
+            sender.sendMessage(" ");
+            sender.sendMessage(SenWorlds.c("&r &r #FF2929&l<> &7- Povinné, #16EC00&l[] &7- Voliteľné"));
+            sender.sendMessage(" ");
+            sender.sendMessage(SenWorlds.c("&r &r #00C7EE/sw create <meno> <env> &8▸ &7Vytvorí Svet"));
+            sender.sendMessage(SenWorlds.c("&r &r #00C7EE/sw delete <meno> &8▸ &7Zmaže Svet"));
+            sender.sendMessage(SenWorlds.c("&r &r #00C7EE/sw reload &8▸ &7Reloadne Plugin"));
+            sender.sendMessage(SenWorlds.c("&r &r #00C7EE/sw list &8▸ &7Zobrazí Svety"));
+            sender.sendMessage(" ");
             return true;
         }
 
@@ -90,7 +100,10 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
             case "create" -> {
 
                 if (args.length < 3) {
-                    sender.sendMessage("§cUsage: /sw create <name> <normal|nether|end|flat|void>");
+                    String noargscreate = usage.getString("noargscreate", SenWorlds.c("{prefix} &cPouzitie: /sw create <meno> <normal/nether/end/flat/void>"))
+                                    .replace("{prefix}", SenWorlds.PREFIX);
+
+                    sender.sendMessage(noargscreate);
                     return true;
                 }
 
@@ -112,6 +125,9 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
                     return true;
                 }
 
+                // Name je meno sveta, tak dame placeholder {name} do plugin.yml
+                // Prefix je tiez v PREFIX String v Main class a je to placeholder {prefix}
+
                 String creatingworld = plugin.getConfig().getString("spravy.creatingworld", "{prefix} §eVytvara sa svet {name} ...")
                                 .replace("{prefix}", SenWorlds.PREFIX)
                                         .replace("{name}", name);
@@ -119,7 +135,12 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
                 sender.sendMessage(SenWorlds.c(creatingworld));
 
                 worldManager.createWorldAsync(name, envType, () -> {
-                    sender.sendMessage("§aWorld " + name + " has been created!");
+
+                    String worldcreated = plugin.getConfig().getString("spravy.worldcreated", "{prefix} &eSvet {name} bol vytvoreny")
+                                    .replace("{prefix}", SenWorlds.PREFIX)
+                                            .replace("{name}", name);
+
+                    sender.sendMessage(worldcreated);
                 });
             }
 
