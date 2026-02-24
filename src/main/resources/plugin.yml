@@ -1,0 +1,10 @@
+name: SenWorlds
+version: '1.0-SNAPSHOT'
+main: org.sen.senWorlds.SenWorlds
+api-version: '1.21'
+
+commands:
+  sw:
+    description: World Command pre SenSMP
+    usage: /sw
+
