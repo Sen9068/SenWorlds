@@ -1,5 +1,7 @@
 package org.sen.senWorlds.world.commands;
 
+import io.papermc.paper.datacomponent.item.consumable.ConsumeEffect;
+import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
 import org.sen.senWorlds.util.ColorUtil;
 
@@ -20,6 +22,7 @@ import org.sen.senWorlds.SenWorlds;
 import org.sen.senWorlds.world.VoidChunkGenerator;
 import org.sen.senWorlds.world.WorldData;
 import org.sen.senWorlds.world.WorldManager;
+
 
 import java.util.List;
 
@@ -81,6 +84,9 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
 
 
         if (args.length == 0) {
+
+            Player p = (Player) sender;
+            p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_CHIME, 1f, 1f);
 
             sender.sendMessage(" ");
             sender.sendMessage(SenWorlds.c("&r &r #00C7EE&lSenWorlds &7- #00C7EE&lCommandy:"));
