@@ -107,7 +107,7 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
                     String noargscreate = usage.getString("noargscreate", SenWorlds.c("{prefix} &cPouzitie: /sw create <meno> <normal/nether/end/flat/void>"))
                                     .replace("{prefix}", SenWorlds.PREFIX);
 
-                    sender.sendMessage(noargscreate);
+                    sender.sendMessage(SenWorlds.c(noargscreate));
                     return true;
                 }
 
@@ -144,7 +144,7 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
                                     .replace("{prefix}", SenWorlds.PREFIX)
                                             .replace("{name}", name);
 
-                    sender.sendMessage(worldcreated);
+                    sender.sendMessage(SenWorlds.c(worldcreated));
                 });
             }
 
