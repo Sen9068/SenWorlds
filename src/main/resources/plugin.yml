@@ -7,5 +7,6 @@ folia-supported: true
 commands:
   sw:
     description: World Command pre SenSMP
+    permission: op
     usage: /sw
 
