@@ -77,6 +77,8 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
+
+        // Sekcie v config.yml
         ConfigurationSection invalidenvconf = plugin.getConfig().getConfigurationSection("errory");
         ConfigurationSection usage = plugin.getConfig().getConfigurationSection("usage");
 
@@ -88,16 +90,10 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
             Player p = (Player) sender;
             p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_CHIME, 1f, 1f);
 
-            sender.sendMessage(" ");
-            sender.sendMessage(SenWorlds.c("&r &r #00C7EE&lSenWorlds &7- #00C7EE&lCommandy:"));
-            sender.sendMessage(" ");
-            sender.sendMessage(SenWorlds.c("&r &r #FF2929&l<> &7- Povinné, #16EC00&l[] &7- Voliteľné"));
-            sender.sendMessage(" ");
-            sender.sendMessage(SenWorlds.c("&r &r #00C7EE/sw create <meno> <env> &8▸ &7Vytvorí Svet"));
-            sender.sendMessage(SenWorlds.c("&r &r #00C7EE/sw delete <meno> &8▸ &7Zmaže Svet"));
-            sender.sendMessage(SenWorlds.c("&r &r #00C7EE/sw reload &8▸ &7Reloadne Plugin"));
-            sender.sendMessage(SenWorlds.c("&r &r #00C7EE/sw list &8▸ &7Zobrazí Svety"));
-            sender.sendMessage(" ");
+            List<String> helpmessage = plugin.getConfig().getStringList("usage.helpmessage");
+            for (String line : helpmessage){
+                sender.sendMessage(SenWorlds.c(line));
+            }
             return true;
         }
 
@@ -226,21 +222,6 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
 
                 sender.sendMessage(" ");
             }
-
-            case "pomoc" -> {
-                sender.sendMessage(" ");
-                sender.sendMessage(SenWorlds.c("&r &r #00C7EE&lSenWorlds &7- #00C7EE&lCommandy:"));
-                sender.sendMessage(" ");
-                sender.sendMessage(SenWorlds.c("&r &r #FF2929&l<> &7- Povinné, #16EC00&l[] &7- Voliteľné"));
-                sender.sendMessage(" ");
-                sender.sendMessage(SenWorlds.c("&r &r #00C7EE/sw create <meno> <env> &8▸ &7Vytvorí Svet"));
-                sender.sendMessage(SenWorlds.c("&r &r #00C7EE/sw delete <meno> &8▸ &7Zmaže Svet"));
-                sender.sendMessage(SenWorlds.c("&r &r #00C7EE/sw reload &8▸ &7Reloadne Plugin"));
-                sender.sendMessage(SenWorlds.c("&r &r #00C7EE/sw list &8▸ &7Zobrazí Svety"));
-                sender.sendMessage(" ");
-            }
-
-
 
 
             default -> sender.sendMessage("§cUnknown subcommand.");
